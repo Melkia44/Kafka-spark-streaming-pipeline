@@ -153,7 +153,7 @@ Chaque ticket est automatiquement routé vers l'équipe compétente :
 
 ## 📹 Démonstration Vidéo
 
-> [Lien vers la vidéo de démonstration]([URL_A_REMPLIR](https://youtu.be/QHaMQH5Bh0U))
+>  [Lien vers la vidéo de démonstration](https://youtu.be/QHaMQH5Bh0U)
 
 La vidéo montre le lancement complet du POC et le parcours du flux de données de bout en bout.
 
