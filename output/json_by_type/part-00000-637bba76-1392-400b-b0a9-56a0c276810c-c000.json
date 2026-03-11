@@ -1,0 +1,5 @@
+{"request_type":"facturation","assigned_team":"Service Comptabilite","ticket_count":18}
+{"request_type":"demande_evolution","assigned_team":"Equipe Produit","ticket_count":14}
+{"request_type":"incident_technique","assigned_team":"Equipe Infrastructure","ticket_count":11}
+{"request_type":"demande_information","assigned_team":"Support Client N1","ticket_count":10}
+{"request_type":"maintenance","assigned_team":"Equipe Operations","ticket_count":7}

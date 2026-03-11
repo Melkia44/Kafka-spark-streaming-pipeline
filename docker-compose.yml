@@ -1,0 +1,100 @@
+
+services:
+  # ============================================================
+  # Redpanda - Plateforme de streaming (compatible API Kafka)
+  # ============================================================
+  redpanda:
+    image: redpandadata/redpanda:v24.1.1
+    container_name: redpanda
+    command:
+      - redpanda
+      - start
+      - --smp 1
+      - --memory 512M
+      - --reserve-memory 0M
+      - --overprovisioned
+      - --node-id 0
+      - --kafka-addr PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+      - --advertise-kafka-addr PLAINTEXT://redpanda:29092,OUTSIDE://localhost:9092
+      - --set redpanda.auto_create_topics_enabled=true
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+      - "8081:8081"
+      - "8082:8082"
+      - "9644:9644"
+    healthcheck:
+      test: ["CMD", "rpk", "cluster", "health", "--api-urls", "localhost:9644"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    networks:
+      - indutech-network
+
+  # ============================================================
+  # Init - Création du topic client_tickets au démarrage
+  # ============================================================
+  init-redpanda:
+    image: redpandadata/redpanda:v24.1.1
+    container_name: init-redpanda
+    depends_on:
+      redpanda:
+        condition: service_healthy
+    entrypoint: >
+      bash -c "
+        rpk topic create client_tickets --partitions 3 --replicas 1 --brokers redpanda:29092 &&
+        echo 'Topic client_tickets cree avec succes (3 partitions)' ||
+        echo 'Topic client_tickets existe deja'
+      "
+    networks:
+      - indutech-network
+
+  # ============================================================
+  # Producer - Génération de tickets clients en temps réel
+  # ============================================================
+  producer:
+    build:
+      context: ./producer
+      dockerfile: Dockerfile
+    container_name: ticket-producer
+    depends_on:
+      init-redpanda:
+        condition: service_completed_successfully
+    environment:
+      KAFKA_BROKER: redpanda:29092
+      TOPIC_NAME: client_tickets
+      PRODUCE_INTERVAL: "1.0"
+    restart: unless-stopped
+    networks:
+      - indutech-network
+
+  # ============================================================
+  # Spark Consumer - Traitement PySpark des tickets
+  # ============================================================
+  spark-consumer:
+    build:
+      context: ./spark-consumer
+      dockerfile: Dockerfile
+    container_name: spark-consumer
+    depends_on:
+      init-redpanda:
+        condition: service_completed_successfully
+    environment:
+      KAFKA_BROKER: redpanda:29092
+      TOPIC_NAME: client_tickets
+      OUTPUT_PATH: /app/output
+      CHECKPOINT_PATH: /app/checkpoints
+    volumes:
+      - ./output:/app/output
+      - spark-checkpoints:/app/checkpoints
+    restart: unless-stopped
+    networks:
+      - indutech-network
+
+volumes:
+  spark-checkpoints:
+
+networks:
+  indutech-network:
+    driver: bridge

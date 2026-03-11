@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Architecture Hybride — InduTechData</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; padding: 20px; }
+  h1 { text-align: center; color: #1B3A5C; margin-bottom: 5px; font-size: 24px; }
+  .subtitle { text-align: center; color: #666; margin-bottom: 20px; font-size: 14px; }
+  .canvas { width: 1200px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 30px; }
+  svg { display: block; margin: 0 auto; }
+  .legend { display: flex; justify-content: center; gap: 30px; margin-top: 15px; font-size: 12px; color: #555; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-color { width: 30px; height: 4px; border-radius: 2px; }
+</style>
+</head>
+<body>
+<h1>Architecture Hybride Cloud — InduTechData</h1>
+<p class="subtitle">Exercice 1 — Modélisez une infrastructure hybride dans le cloud</p>
+
+<div class="canvas">
+<svg viewBox="0 0 1140 620" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+
+  <!-- ===== ZONE ON-PREMISE ===== -->
+  <rect x="20" y="40" width="380" height="540" rx="12" fill="#FFF7ED" stroke="#EA580C" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="210" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#EA580C">🏢 DATACENTER ON-PREMISE</text>
+
+  <!-- SQL Server -->
+  <rect x="50" y="80" width="160" height="70" rx="8" fill="#1B3A5C" />
+  <text x="130" y="108" text-anchor="middle" font-size="11" fill="white" font-weight="bold">SQL Server</text>
+  <text x="130" y="125" text-anchor="middle" font-size="9" fill="#B0C4DE">40 To — ERP/CRM</text>
+  <text x="130" y="140" text-anchor="middle" font-size="9" fill="#B0C4DE">Réplication + Backup</text>
+
+  <!-- Active Directory -->
+  <rect x="230" y="80" width="150" height="70" rx="8" fill="#1B3A5C"/>
+  <text x="305" y="108" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Active Directory</text>
+  <text x="305" y="125" text-anchor="middle" font-size="9" fill="#B0C4DE">Auth & Autorisation</text>
+  <text x="305" y="140" text-anchor="middle" font-size="9" fill="#B0C4DE">Maître d'identités</text>
+
+  <!-- ERP -->
+  <rect x="50" y="180" width="150" height="60" rx="8" fill="#374151"/>
+  <text x="125" y="205" text-anchor="middle" font-size="11" fill="white" font-weight="bold">ERP</text>
+  <text x="125" y="222" text-anchor="middle" font-size="9" fill="#B0C4DE">Comptabilité, RH</text>
+
+  <!-- CRM -->
+  <rect x="220" y="180" width="150" height="60" rx="8" fill="#374151"/>
+  <text x="295" y="205" text-anchor="middle" font-size="11" fill="white" font-weight="bold">CRM</text>
+  <text x="295" y="222" text-anchor="middle" font-size="9" fill="#B0C4DE">Relation client</text>
+
+  <!-- Capteurs IoT -->
+  <rect x="80" y="300" width="260" height="70" rx="8" fill="#7C3AED"/>
+  <text x="210" y="328" text-anchor="middle" font-size="12" fill="white" font-weight="bold">🔌 Capteurs IoT</text>
+  <text x="210" y="348" text-anchor="middle" font-size="9" fill="#DDD6FE">+50 Go/mois — Flux temps réel</text>
+  <text x="210" y="362" text-anchor="middle" font-size="9" fill="#DDD6FE">MQTT / HTTPS</text>
+
+  <!-- Utilisateurs -->
+  <rect x="100" y="430" width="220" height="55" rx="8" fill="#475569"/>
+  <text x="210" y="455" text-anchor="middle" font-size="11" fill="white" font-weight="bold">👥 Utilisateurs internes</text>
+  <text x="210" y="472" text-anchor="middle" font-size="9" fill="#CBD5E1">SSO via Active Directory</text>
+
+  <!-- ===== CONNEXION VPN ===== -->
+  <rect x="415" y="240" width="110" height="110" rx="55" fill="#059669" stroke="#059669" stroke-width="2"/>
+  <text x="470" y="282" text-anchor="middle" font-size="10" fill="white" font-weight="bold">VPN</text>
+  <text x="470" y="298" text-anchor="middle" font-size="9" fill="#D1FAE5">Site-to-Site</text>
+  <text x="470" y="312" text-anchor="middle" font-size="8" fill="#D1FAE5">IPsec / AES-256</text>
+
+  <!-- Flèche ON-PREM → VPN -->
+  <line x1="400" y1="295" x2="415" y2="295" stroke="#059669" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+  <!-- ===== ZONE AWS CLOUD ===== -->
+  <rect x="545" y="40" width="575" height="540" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="832" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#2563EB">☁️ AWS CLOUD (VPC)</text>
+
+  <!-- Flèche VPN → AWS -->
+  <line x1="525" y1="295" x2="545" y2="295" stroke="#059669" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+  <!-- Redpanda -->
+  <rect x="575" y="80" width="200" height="80" rx="8" fill="#DC2626"/>
+  <text x="675" y="108" text-anchor="middle" font-size="13" fill="white" font-weight="bold">🔴 Redpanda</text>
+  <text x="675" y="126" text-anchor="middle" font-size="9" fill="#FEE2E2">Streaming temps réel</text>
+  <text x="675" y="142" text-anchor="middle" font-size="9" fill="#FEE2E2">Topic: client_tickets (3 part.)</text>
+
+  <!-- Amazon S3 -->
+  <rect x="575" y="200" width="200" height="70" rx="8" fill="#16A34A"/>
+  <text x="675" y="228" text-anchor="middle" font-size="12" fill="white" font-weight="bold">📦 Amazon S3</text>
+  <text x="675" y="248" text-anchor="middle" font-size="9" fill="#DCFCE7">Données IoT, logs, bruts</text>
+  <text x="675" y="260" text-anchor="middle" font-size="9" fill="#DCFCE7">SSE-S3 chiffrement au repos</text>
+
+  <!-- Amazon Redshift -->
+  <rect x="575" y="310" width="200" height="70" rx="8" fill="#2563EB"/>
+  <text x="675" y="338" text-anchor="middle" font-size="12" fill="white" font-weight="bold">📊 Amazon Redshift</text>
+  <text x="675" y="358" text-anchor="middle" font-size="9" fill="#DBEAFE">Entrepôt analytique SQL</text>
+  <text x="675" y="370" text-anchor="middle" font-size="9" fill="#DBEAFE">Requêtes complexes + Spectrum</text>
+
+  <!-- AD Connector -->
+  <rect x="840" y="80" width="180" height="70" rx="8" fill="#EA580C"/>
+  <text x="930" y="108" text-anchor="middle" font-size="11" fill="white" font-weight="bold">🔑 AD Connector</text>
+  <text x="930" y="126" text-anchor="middle" font-size="9" fill="#FED7AA">Proxy vers AD on-premise</text>
+  <text x="930" y="140" text-anchor="middle" font-size="9" fill="#FED7AA">SSO fédéré</text>
+
+  <!-- IAM -->
+  <rect x="840" y="180" width="180" height="55" rx="8" fill="#D97706"/>
+  <text x="930" y="205" text-anchor="middle" font-size="11" fill="white" font-weight="bold">🛡️ AWS IAM</text>
+  <text x="930" y="222" text-anchor="middle" font-size="9" fill="#FEF3C7">Rôles & Permissions</text>
+
+  <!-- AWS DMS -->
+  <rect x="840" y="270" width="180" height="65" rx="8" fill="#7C3AED"/>
+  <text x="930" y="296" text-anchor="middle" font-size="11" fill="white" font-weight="bold">🔄 AWS DMS</text>
+  <text x="930" y="314" text-anchor="middle" font-size="9" fill="#DDD6FE">CDC SQL Server → Redshift</text>
+
+  <!-- CloudWatch -->
+  <rect x="840" y="370" width="180" height="55" rx="8" fill="#0891B2"/>
+  <text x="930" y="394" text-anchor="middle" font-size="11" fill="white" font-weight="bold">📈 CloudWatch</text>
+  <text x="930" y="411" text-anchor="middle" font-size="9" fill="#CFFAFE">Monitoring + Alertes coûts</text>
+
+  <!-- Cost Explorer -->
+  <rect x="840" y="455" width="180" height="55" rx="8" fill="#0D9488"/>
+  <text x="930" y="479" text-anchor="middle" font-size="11" fill="white" font-weight="bold">💰 Cost Explorer</text>
+  <text x="930" y="496" text-anchor="middle" font-size="9" fill="#CCFBF1">Budgets + Suivi dépenses</text>
+
+  <!-- ===== FLUX DE DONNÉES (flèches) ===== -->
+  <defs>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse" fill="#2563EB">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse" fill="#DC2626">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse" fill="#059669">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+    <marker id="arrowOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse" fill="#EA580C">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse" fill="#7C3AED">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- IoT → Redpanda (via VPN) -->
+  <path d="M 340 335 Q 470 120 575 120" fill="none" stroke="#DC2626" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrowRed)"/>
+  <text x="430" y="175" font-size="8" fill="#DC2626" font-weight="bold" transform="rotate(-30 430 175)">Kafka Protocol (TLS)</text>
+  <text x="445" y="188" font-size="7" fill="#DC2626" transform="rotate(-30 445 188)">Temps réel</text>
+
+  <!-- Redpanda → S3 -->
+  <line x1="675" y1="160" x2="675" y2="200" stroke="#16A34A" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <text x="690" y="185" font-size="8" fill="#16A34A" font-weight="bold">S3 Sink</text>
+
+  <!-- Redpanda → Redshift -->
+  <path d="M 675 160 L 675 175 L 640 175 L 640 310" fill="none" stroke="#2563EB" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- SQL Server → DMS (via VPN) -->
+  <path d="M 210 150 Q 470 400 840 302" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowPurple)"/>
+  <text x="530" y="380" font-size="8" fill="#7C3AED" font-weight="bold">CDC via VPN</text>
+
+  <!-- DMS → Redshift -->
+  <line x1="840" y1="310" x2="775" y2="340" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+  <!-- AD → AD Connector -->
+  <path d="M 380 115 Q 610 60 840 115" fill="none" stroke="#EA580C" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowOrange)"/>
+  <text x="600" y="68" font-size="8" fill="#EA580C" font-weight="bold">LDAPS via VPN</text>
+
+  <!-- AD Connector → IAM -->
+  <line x1="930" y1="150" x2="930" y2="180" stroke="#D97706" stroke-width="2" marker-end="url(#arrowOrange)"/>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-color" style="background:#DC2626"></div> Streaming temps réel (Kafka Protocol)</div>
+  <div class="legend-item"><div class="legend-color" style="background:#7C3AED"></div> Synchronisation CDC (batch continu)</div>
+  <div class="legend-item"><div class="legend-color" style="background:#EA580C"></div> Identités (LDAPS)</div>
+  <div class="legend-item"><div class="legend-color" style="background:#059669"></div> Réseau VPN (IPsec)</div>
+</div>
+
+</body>
+</html>

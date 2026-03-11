@@ -1,0 +1,4 @@
+v1
+{"path":"file:///app/output/enriched_tickets/part-00000-7207dee2-88ea-47f5-8054-8b56d8cdddad-c000.snappy.parquet","size":3899,"isDir":false,"modificationTime":1771847190622,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/enriched_tickets/part-00001-aa81258b-0d7f-4b17-b4d1-c4c7ab826088-c000.snappy.parquet","size":4168,"isDir":false,"modificationTime":1771847190624,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/enriched_tickets/part-00002-2c35ceb8-6451-406c-839a-dffedf6aa2c8-c000.snappy.parquet","size":3574,"isDir":false,"modificationTime":1771847191149,"blockReplication":1,"blockSize":33554432,"action":"add"}
