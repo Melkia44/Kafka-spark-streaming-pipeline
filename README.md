@@ -64,8 +64,8 @@ indutech-tickets-poc/
 
 ```bash
 # Cloner le repository
-git clone <[url-du-repo](https://github.com/Melkia44/P9)>
-cd indutech-tickets-poc
+git clone https://github.com/Melkia44/P9.git
+cd P9
 
 # Lancer toute la stack
 docker-compose up --build
