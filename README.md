@@ -64,7 +64,7 @@ indutech-tickets-poc/
 
 ```bash
 # Cloner le repository
-git clone <url-du-repo>
+git clone <[url-du-repo](https://github.com/Melkia44/P9)>
 cd indutech-tickets-poc
 
 # Lancer toute la stack
