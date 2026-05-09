@@ -64,8 +64,8 @@ indutech-tickets-poc/
 
 ```bash
 # Cloner le repository
-git clone https://github.com/Melkia44/P9.git
-cd P9
+git clone https://github.com/Melkia44/Cloud-infrastructure-modeling.git
+cd Cloud-infrastructure-modeling
 
 # Lancer toute la stack
 docker-compose up --build
