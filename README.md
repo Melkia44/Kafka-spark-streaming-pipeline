@@ -30,7 +30,7 @@ L'enjeu : passer d'un traitement batch quotidien à une **architecture événeme
 ## 🎯 Objectifs
 
 - ✅ **Ingérer** des tickets clients en continu via un broker Kafka-compatible
-- ✅ **Enrichir** chaque ticket par assignation automatique d'équipe de support
+- ✅ **Enrichir** chaque ticket par assignation automatique d'équipe hde support
 - ✅ **Agréger** en temps réel les volumes par type, priorité, heure, client
 - ✅ **Exporter** les résultats dans des formats appropriés (Parquet pour analytics, JSON pour BI)
 - ✅ **Conteneuriser** toute la stack pour reproductibilité (`docker-compose up`)
@@ -257,7 +257,7 @@ Le repository a été initialement publié sous le nom `Cloud-infrastructure-mod
 **Mathieu Lowagie**  
 Data Engineer | Service Delivery Manager — 17 ans d'expérience B2B télécoms
 
-🔗 [LinkedIn](https://www.linkedin.com/in/mathieulowagie/) • 💼 [GitHub](https://github.com/Melkia44)
+🔗 [LinkedIn](https://www.linkedin.com/in/mathieu-pm/) • 💼 [GitHub](https://github.com/Melkia44)
 
 ---
 
